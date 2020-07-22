@@ -16,6 +16,7 @@ repositories {
 
 dependencies {
     compile 'org.springframework.boot:spring-boot-starter-data-jpa:1.1.4.RELEASE'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: '2.2.4.RELEASE'
     compile 'org.hibernate:hibernate-core:4.3.6.Final'
     compile 'mysql:mysql-connector-java:5.1.31'
     compile "org.springframework.boot:spring-boot-starter-web"
