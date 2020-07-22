@@ -4,7 +4,6 @@ import com.server.auth.AuthFilter;
 import com.server.auth.UserPassFilter;
 import com.server.user.UserService;
 import org.springframework.context.annotation.Bean;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -15,10 +14,14 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-import static com.server.auth.SecurityConstants.SIGN_UP_URL;
-
 @EnableWebSecurity
 public class WebSecurity extends WebSecurityConfigurerAdapter {
+    public static final String[] NON_SECURE_URLS = new String[]{
+            "/registration",
+            "/login",
+            "/"
+    };
+
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final UserService userService;
 
@@ -32,7 +35,8 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
         http.cors()
                 .and().csrf().disable()
                 .authorizeRequests()
-                .antMatchers(HttpMethod.POST, SIGN_UP_URL).permitAll()
+                .antMatchers(NON_SECURE_URLS)
+                .permitAll()
                 .anyRequest()
                 .authenticated()
                 .and()

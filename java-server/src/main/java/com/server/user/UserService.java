@@ -1,12 +1,13 @@
 package com.server.user;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
 
 import static java.util.Collections.emptyList;
 
@@ -15,6 +16,9 @@ import static java.util.Collections.emptyList;
 public class UserService implements UserDetailsService {
 
     private UserRepo userRepo;
+
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     public UserService(UserRepo userRepo) {
         this.userRepo = userRepo;
@@ -31,5 +35,10 @@ public class UserService implements UserDetailsService {
 
     public UserEntity findByUsername(String username) {
         return userRepo.findByUsername(username);
+    }
+
+    public void save(UserEntity user) {
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        userRepo.save(user);
     }
 }
