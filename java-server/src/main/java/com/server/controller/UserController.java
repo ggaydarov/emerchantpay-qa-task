@@ -1,6 +1,5 @@
 package com.server.controller;
 
-import com.server.auth.SecurityService;
 import com.server.auth.UserValidator;
 import com.server.user.UserEntity;
 import com.server.user.UserService;
@@ -16,8 +15,6 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    private SecurityService securityService;
-
     @Autowired
     private UserValidator userValidator;
 
@@ -29,18 +26,10 @@ public class UserController {
     }
 
     @PostMapping("/registration")
-    public String registration(@ModelAttribute("userForm") UserEntity userForm, BindingResult bindingResult) {
-        userValidator.validate(userForm, bindingResult);
-
-        if (bindingResult.hasErrors()) {
-            return "registration";
-        }
-
+    public String registration(@ModelAttribute("userForm") UserEntity userForm) {
         userService.save(userForm);
 
-        securityService.autoLogin(userForm.getUsername(), userForm.getPassword());
-
-        return "redirect:/welcome";
+        return "redirect:/login";
     }
 
     @GetMapping("/login")
@@ -54,9 +43,9 @@ public class UserController {
         return "login";
     }
 
-    @GetMapping({"/", "/welcome"})
+    @GetMapping({"/"})
     public String welcome(Model model) {
-        return "welcome.html";
+        return "welcome";
     }
 
 }

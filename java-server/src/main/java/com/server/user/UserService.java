@@ -1,5 +1,6 @@
 package com.server.user;
 
+import com.server.exceptions.MissingUserException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -40,5 +41,13 @@ public class UserService implements UserDetailsService {
     public void save(UserEntity user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         userRepo.save(user);
+    }
+
+    public UserEntity getUser(String username) {
+        UserEntity userEntity = userRepo.findByUsername(username);
+        if (userEntity == null) {
+            throw new MissingUserException(username);
+        }
+        return userEntity;
     }
 }
