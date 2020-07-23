@@ -42,6 +42,7 @@ test {
 
 task integrationTest(type: Test) {
     useJUnitPlatform {
+        include '**/IntegrationTest.class'
         includeTags 'integrationTests'
     }
 }
