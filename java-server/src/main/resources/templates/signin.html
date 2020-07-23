@@ -14,15 +14,12 @@
     <form method="POST" action="/login" class="form-signin">
         <h2 class="form-heading">Log in</h2>
 
-        <div class="form-group ${error != null ? 'has-error' : ''}">
-            <span>${message}</span>
+        <div class="form-group">
             <input name="username" type="text" class="form-control" placeholder="Username"
                    autofocus="true"/>
             <input name="password" type="password" class="form-control" placeholder="Password"/>
-            <span>${error}</span>
-
             <button class="btn btn-lg btn-primary btn-block" type="submit">Log In</button>
-            <h4 class="text-center"><a href="http://localhost:8080/registration">Create an account</a></h4>
+            <h4 class="text-center"><a href="/registration">Create an account</a></h4>
         </div>
     </form>
 </div>

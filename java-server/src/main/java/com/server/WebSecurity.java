@@ -18,7 +18,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 public class WebSecurity extends WebSecurityConfigurerAdapter {
     public static final String[] NON_SECURE_URLS = new String[]{
             "/registration",
-            "/login",
+            "/signin",
             "/"
     };
 

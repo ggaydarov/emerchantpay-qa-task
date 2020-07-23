@@ -18,6 +18,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.stereotype.Service;
 
 import javax.servlet.FilterChain;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -63,11 +64,14 @@ public class UserPassFilter extends UsernamePasswordAuthenticationFilter {
                 .sign(Algorithm.HMAC512(SECRET.getBytes()));
         res.addHeader(HEADER_STRING, TOKEN_PREFIX + token);
         res.addHeader("X-TOKEN", token);
+        res.addCookie(new Cookie("X-TOKEN", token));
 
         Map<String, String> tokenMap = new HashMap<>();
         tokenMap.put("token", token);
 
         res.getOutputStream().write(MAPPER.writeValueAsBytes(tokenMap));
+
+        res.sendRedirect("/hr");
     }
 
 }
