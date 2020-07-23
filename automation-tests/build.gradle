@@ -8,6 +8,7 @@ repositories {
 
 dependencies {
     testImplementation('org.junit.jupiter:junit-jupiter:5.5.1')
+    testCompile('io.github.bonigarcia:selenium-jupiter:3.3.0')
 }
 
 test {
