@@ -16,7 +16,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import static com.server.auth.SecurityConstants.HEADER_STRING;
 import static com.server.auth.SecurityConstants.TOKEN_PREFIX;

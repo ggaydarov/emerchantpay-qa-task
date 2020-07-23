@@ -1,6 +1,5 @@
 package com.server.controller;
 
-import com.server.auth.UserValidator;
 import com.server.user.UserEntity;
 import com.server.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,9 +12,6 @@ public class UserController {
 
     @Autowired
     private UserService userService;
-
-    @Autowired
-    private UserValidator userValidator;
 
     @GetMapping("/registration")
     public String registration(Model model) {
