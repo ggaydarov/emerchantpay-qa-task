@@ -1,8 +1,11 @@
 package com.server.employee;
 
+import org.springframework.stereotype.Service;
+
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class EmployeeService {
 
     private EmployeeRepo employeeRepo;

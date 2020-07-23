@@ -8,8 +8,36 @@
 <body>
 <div class="container">
     <div>
-        <h2>Welcome</h2>
+        <h2>Welcome HRs</h2>
+        <h3 class="mt-4">Employee list</h3>
     </div>
+    <table border="2" width="70%" cellpadding="2">
+        <tr><th>Id</th>
+            <th>FirstName</th>
+            <th>LastName</th>
+            <th>Address</th>
+            <th>Country</th>
+            <th>City</th>
+            <th>Zip</th>
+            <th>Phone</th>
+            <th>Edit</th>
+            <th>Delete</th>
+        </tr>
+        <tr th:each="emp : ${list}">
+            <td th:text="${emp.id}">1</td>
+            <td th:text="${emp.firstName}"></td>
+            <td th:text="${emp.lastName}"></td>
+            <td th:text="${emp.address}"></td>
+            <td th:text="${emp.country}"></td>
+            <td th:text="${emp.city}"></td>
+            <td th:text="${emp.zip}"></td>
+            <td th:text="${emp.phone}"></td>
+            <td><a th:href="@{'editemp/' + ${emp.id}}">Edit</a></td>
+            <td><a th:href="@{'deleteemp/'+ ${emp.id}}">Delete</a></td>
+        </tr>
+    </table>
+    <br/>
+    <a href="add">Add New Employee</a>
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
