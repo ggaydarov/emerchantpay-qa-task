@@ -16,7 +16,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@SpringBootTest(classes= JavaServerApplication.class)
+@SpringBootTest(classes = JavaServerApplication.class)
 @AutoConfigureMockMvc
 @RunWith(SpringRunner.class)
 public class TestingWebApplicationTest {
@@ -41,12 +41,5 @@ public class TestingWebApplicationTest {
         this.mockMvc.perform(get("/registration")).andDo(print()).andExpect(status().isOk())
                 .andExpect(content().string(containsString("Username")))
                 .andExpect(content().string(containsString("Password")));
-    }
-
-    @Test
-    public void verifiesRegisterUser() throws Exception {
-        this.mockMvc.perform(post("/registration").param("username", "test")
-                .param("password", "pass"))
-                .andDo(print()).andExpect(status().is(302));
     }
 }

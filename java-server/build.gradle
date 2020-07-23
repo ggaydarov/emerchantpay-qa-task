@@ -31,5 +31,17 @@ dependencies {
 }
 
 test {
-    useJUnitPlatform()
+    exclude '**/IntegrationTest.class'
+}
+
+test {
+    useJUnitPlatform {
+        excludeTags "integrationTests"
+    }
+}
+
+task integrationTest(type: Test) {
+    useJUnitPlatform {
+        includeTags 'integrationTests'
+    }
 }

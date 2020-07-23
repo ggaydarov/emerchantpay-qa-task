@@ -3,6 +3,7 @@ package com.integration;
 import com.server.JavaServerApplication;
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.jupiter.api.Tag;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -11,17 +12,17 @@ import org.springframework.http.*;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
-import java.net.URISyntaxException;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes= JavaServerApplication.class)
+@Tag(value = "integrationTests")
 public class IntegrationTest {
 
     @Autowired
     private TestRestTemplate restTemplate;
 
     @Test
-    public void testRegistration() throws URISyntaxException
+    public void testRegistration()
     {
         final String baseUrl = "http://localhost:11111/registration";
 
@@ -39,7 +40,7 @@ public class IntegrationTest {
     }
 
     @Test
-    public void testLogin() throws URISyntaxException
+    public void testLogin()
     {
         final String baseUrl = "http://localhost:11111/login";
 
