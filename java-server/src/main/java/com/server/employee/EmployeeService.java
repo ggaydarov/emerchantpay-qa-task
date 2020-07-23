@@ -18,15 +18,36 @@ public class EmployeeService {
         employeeRepo.save(employeeEntity);
     }
 
-    public void delete(EmployeeEntity employeeEntity) {
-        employeeRepo.delete(employeeEntity);
+    public void delete(Long id) {
+        Optional<EmployeeEntity> opEntity = employeeRepo.findById(id);
+        if(opEntity.isPresent()) {
+            EmployeeEntity entity = opEntity.get();
+            employeeRepo.delete(entity);
+        }
     }
 
-    public void edit(EmployeeEntity employeeEntity) {
-        Optional<EmployeeEntity> entity = employeeRepo.findById(employeeEntity.getId());
+    public void edit(Long id, EmployeeEntity employeeEntity) {
+        Optional<EmployeeEntity> opEntity = employeeRepo.findById(id);
+
+        if(opEntity.isPresent()) {
+            EmployeeEntity entity = opEntity.get();
+            entity.setFirstName(employeeEntity.getFirstName());
+            entity.setLastName(employeeEntity.getLastName());
+            entity.setAddress(employeeEntity.getAddress());
+            entity.setCountry(employeeEntity.getCountry());
+            entity.setCity(employeeEntity.getCity());
+            entity.setZip(employeeEntity.getZip());
+            entity.setPhone(employeeEntity.getPhone());
+            entity.setSalary(employeeEntity.getSalary());
+            employeeRepo.save(entity);
+        }
     }
 
     public List<EmployeeEntity> getAll() {
         return employeeRepo.findAll();
+    }
+
+    public EmployeeEntity getById(Long id) {
+        return employeeRepo.findById(id).get();
     }
 }
