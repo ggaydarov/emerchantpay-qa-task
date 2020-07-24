@@ -18,9 +18,8 @@ dependencies {
     compile 'org.springframework.boot:spring-boot-starter-data-jpa:2.3.1.RELEASE'
     compile 'org.springframework.boot:spring-boot-starter-security:2.3.1.RELEASE'
     compile 'org.springframework.boot:spring-boot-starter-test:2.3.1.RELEASE'
-    compile 'org.springframework.boot:spring-boot-test:2.2.2.RELEASE'
     compile 'org.springframework.boot:spring-boot-starter-thymeleaf'
-    compile 'org.springframework:spring-jdbc:4.1.4.RELEASE'
+    compile 'org.springframework:spring-jdbc:5.2.8.RELEASE'
     compile 'org.hibernate:hibernate-core:5.4.18.Final'
     compile 'mysql:mysql-connector-java:8.0.21'
     compile "org.springframework.boot:spring-boot-starter-web"
@@ -31,18 +30,5 @@ dependencies {
 }
 
 test {
-    exclude '**/IntegrationTest.class'
-}
-
-test {
-    useJUnitPlatform {
-        excludeTags "integrationTests"
-    }
-}
-
-task integrationTest(type: Test) {
-    useJUnitPlatform {
-        include '**/IntegrationTest.class'
-        includeTags 'integrationTests'
-    }
+    useJUnitPlatform()
 }
