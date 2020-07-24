@@ -3,10 +3,7 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
-import java.util.function.Function;
 
 public class BaseBrowserFunctions {
 
@@ -17,15 +14,16 @@ public class BaseBrowserFunctions {
     }
 
     public void waitAndWrite(ChromeDriver driver, By by, String text) {
-        System.out.println("Writes text in element");
+        System.out.println("Writes text in element " + text);
         WebDriverWait wait = new WebDriverWait(driver, 15);
         wait.until(ExpectedConditions.visibilityOfElementLocated(by)).sendKeys(text);
     }
 
-    public void waitAndClearInput(ChromeDriver driver, By by) {
-        System.out.println("Writes text in element");
+    public void waitClearInputAndWrite(ChromeDriver driver, By by, String text) {
+        System.out.println("Clears text in element and writes new " + text);
         WebDriverWait wait = new WebDriverWait(driver, 15);
         wait.until(ExpectedConditions.visibilityOfElementLocated(by)).clear();
+        driver.findElement(by).sendKeys(text);
     }
 
     public void waitElement(ChromeDriver driver, By by) {
@@ -36,7 +34,10 @@ public class BaseBrowserFunctions {
 
     public void waitForPageReadyState(ChromeDriver driver) {
         new WebDriverWait(driver, 30).until((ExpectedCondition<Boolean>) wd ->
-                ((JavascriptExecutor) wd).executeScript("return document.readyState").equals("complete"));
+        {
+            assert wd != null;
+            return ((JavascriptExecutor) wd).executeScript("return document.readyState").equals("complete");
+        });
     }
 
     public void clickOnLastElem(ChromeDriver driver, By by) {

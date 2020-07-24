@@ -4,11 +4,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.openqa.selenium.By;
 import org.openqa.selenium.chrome.ChromeDriver;
 
-import java.util.Date;
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
 import java.util.Random;
-import java.util.concurrent.TimeUnit;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -107,24 +103,12 @@ class SeleniumTest {
 
         baseBrowserFunctions.waitAndClick(driver, Constants.addEmployeeLink);
         //verifies customer is add employee
+        baseBrowserFunctions.waitForPageReadyState(driver);
         assertEquals("Add employee", driver.getTitle());
 
-        baseBrowserFunctions.waitElement(driver, Constants.hrLink);
-        baseBrowserFunctions.waitForURL(driver, "add");
-        driver.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
-        baseBrowserFunctions.waitAndWrite(driver, Constants.fName , ts + "fname1");
-        baseBrowserFunctions.waitAndWrite(driver, Constants.lName , ts + "lname1");
-        baseBrowserFunctions.waitAndWrite(driver, Constants.address , ts + "address1");
-        baseBrowserFunctions.waitAndWrite(driver, Constants.country , ts + "country1");
-        baseBrowserFunctions.waitAndWrite(driver, Constants.city , ts + "city1");
-        baseBrowserFunctions.waitAndWrite(driver, Constants.zip , ts + "zip1");
-        baseBrowserFunctions.waitAndWrite(driver, Constants.phone , ts + "phone1");
-        baseBrowserFunctions.waitAndWrite(driver, Constants.salary , ts + "salary1");
-        baseBrowserFunctions.waitAndClick(driver, Constants.submit);
-
+        addNewEmployee(driver, ts);
         waitForHRPage(driver);
 
-        driver.get(Constants.hrURL);
         String pageText = driver.findElement(By.tagName("body")).getText();
 
         //verifies that new employee is saved
@@ -138,11 +122,13 @@ class SeleniumTest {
 
         baseBrowserFunctions.clickOnLastElem(driver, Constants.editEmployeeLink);
         baseBrowserFunctions.waitForPageReadyState(driver);
+        baseBrowserFunctions.waitForURL(driver, "edit");
 
-        baseBrowserFunctions.waitAndClearInput(driver, Constants.address);
-        baseBrowserFunctions.waitAndWrite(driver, Constants.address , ts + "address2");
+        baseBrowserFunctions.waitElement(driver, Constants.address);
+        baseBrowserFunctions.waitClearInputAndWrite(driver, Constants.address, ts + "address2");
         baseBrowserFunctions.waitAndClick(driver, Constants.submit);
 
+        baseBrowserFunctions.waitForElements(driver, Constants.hrTD);
         waitForHRPage(driver);
 
         pageText = driver.findElement(By.tagName("body")).getText();
@@ -166,7 +152,6 @@ class SeleniumTest {
         baseBrowserFunctions.waitElement(driver, Constants.addEmployeeLink);
         baseBrowserFunctions.waitElement(driver, By.tagName("body"));
         baseBrowserFunctions.waitElement(driver, Constants.table);
-        baseBrowserFunctions.waitForElements(driver, Constants.hrTD);
     }
 
     private void waitForLoginPage(ChromeDriver driver) {
@@ -174,5 +159,20 @@ class SeleniumTest {
         baseBrowserFunctions.waitForPageReadyState(driver);
         baseBrowserFunctions.waitElement(driver, Constants.submit);
         baseBrowserFunctions.waitElement(driver, Constants.regLink);
+    }
+
+    private void addNewEmployee(ChromeDriver driver, String ts) {
+        baseBrowserFunctions.waitForURL(driver, "add");
+        baseBrowserFunctions.waitElement(driver, Constants.hrLink);
+        baseBrowserFunctions.waitForElements(driver, By.tagName("input"));
+        baseBrowserFunctions.waitAndWrite(driver, Constants.fName , ts + "fname1");
+        baseBrowserFunctions.waitAndWrite(driver, Constants.lName , ts + "lname1");
+        baseBrowserFunctions.waitAndWrite(driver, Constants.address , ts + "address1");
+        baseBrowserFunctions.waitAndWrite(driver, Constants.country , ts + "country1");
+        baseBrowserFunctions.waitAndWrite(driver, Constants.city , ts + "city1");
+        baseBrowserFunctions.waitAndWrite(driver, Constants.zip , ts + "zip1");
+        baseBrowserFunctions.waitAndWrite(driver, Constants.phone , ts + "phone1");
+        baseBrowserFunctions.waitAndWrite(driver, Constants.salary , ts + "salary1");
+        baseBrowserFunctions.waitAndClick(driver, Constants.submit);
     }
 }
